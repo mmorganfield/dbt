@@ -1,7 +1,7 @@
 version: 2
 
 sources:
-    - name: dev_base
+    - name: base
       database: max-warehouse-323301
       freshness: 
         warn_after: {count: 48, period: hour}
