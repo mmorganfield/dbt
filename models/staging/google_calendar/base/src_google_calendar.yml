@@ -1,6 +1,8 @@
+version: 2
+
 sources:
-    - name: google_calendar
-      database: dev_sandbox
+    - name: dev_sandbox
+      database: max-warehouse-323301
       freshness: 
         warn_after: {count: 48, period: hour}
 
