@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+    - name: dev_base
+      database: max-warehouse-323301
+      freshness: 
+        warn_after: {count: 48, period: hour}
+
+      tables: 
+        - name: base_google_calendar
