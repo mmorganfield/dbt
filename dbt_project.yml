@@ -40,14 +40,9 @@ clean-targets:         # directories to be removed by `dbt clean`
 sources:
     warehouse:
         +enabled: true
-
-        staging:
-            google_calendar:
-                dev_base.base_google_calendar: enabled
         
 
 models:
-    
     staging:
         base:
             +schema: dev_base
