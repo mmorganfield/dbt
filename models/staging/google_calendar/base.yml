@@ -1,0 +1,11 @@
+name: Analytics
+
+models:
+    
+    Analytics:
+
+        staging:
+
+            google_calendar:
+            +enabled: true
+            +materialized: table
