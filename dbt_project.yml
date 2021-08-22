@@ -43,4 +43,17 @@ sources:
 
         staging:
             google_calendar:
-                dev_sandbox.google_calendar_test: enabled
+                dev_base.base_google_calendar: enabled
+        
+
+models:
+    incremental_strategy: merge
+    staging:
+        base:
+            schema: dev_base
+        staging:
+    intermediate:
+        schema: intermediate
+    prod_dw:
+        schema: prod_dw
+        
