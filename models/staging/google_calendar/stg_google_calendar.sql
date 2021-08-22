@@ -30,4 +30,3 @@ SELECT
 FROM base_google_calendar
 ,UNNEST(items) AS items
 ,UNNEST(attendees) AS attendees
-ORDER BY event_summary DESC
