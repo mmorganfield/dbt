@@ -1,0 +1,8 @@
+sources:
+    - name: google_calendar
+      database: dev_sandbox
+      freshness: 
+        warn_after: {count: 48, period: hour}
+
+      tables: 
+        - name: google_calendar_test

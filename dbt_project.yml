@@ -38,4 +38,9 @@ clean-targets:         # directories to be removed by `dbt clean`
 #           materialized: view
 
 sources:
-    
+    warehouse:
+        +enabled: true
+
+        staging:
+            google_calendar:
+                dev_sandbox.google_calendar_test: enabled
