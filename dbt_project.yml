@@ -37,23 +37,18 @@ clean-targets:         # directories to be removed by `dbt clean`
 #       example:
 #           materialized: view
 
-sources:
-    warehouse:
-        +enabled: true
-        
 
 models:
-    staging:
-        base:
-            +schema: dev_base
-            +materialized: ephemeral
+    warehouse: 
         staging:
             +schema: dev_staging
-            +incremental_strategy: merge
-    intermediate:
-        +schema: dev_intermediate
-    prod_dw:
-        +schema: prod_dw
+            +materialized: table
+            stg_google_calendar:
+                +enabled: true
+        intermediate:
+            +schema: dev_intermediate
+        prod_dw:
+            +schema: prod_dw
 
 packages:
   - package: dbt-labs/dbt_external_tables
