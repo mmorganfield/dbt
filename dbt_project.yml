@@ -41,11 +41,11 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
     warehouse: 
         staging:
-            +materialized: table
+            +materialized: view
             stg_google_calendar:
                 +enabled: true
         intermediate:
-            +materialized: table
+            +materialized: view
             int_google_calendar:
                 +enabled: true
         prod_dw:
