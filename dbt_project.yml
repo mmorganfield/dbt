@@ -46,6 +46,9 @@ models:
                 +enabled: true
         intermediate:
             +schema: dev_intermediate
+            int_google_calendar:
+                +enabled: true
+                +materialized: table
         prod_dw:
             +schema: prod_dw
 
