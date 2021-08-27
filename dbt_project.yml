@@ -34,6 +34,10 @@ models:
                 +enabled: true
         prod_dw:
             +schema: prod_dw
+            +materialized: view
+            google_calendar:
+                +enabled: true
+
 
 # Packages applied to this project:
 
