@@ -36,7 +36,7 @@ FROM base_google_calendar
 )
 
 SELECT 
-    *,
+    stg_google_calendar_raw.*,
     FARM_FINGERPRINT(CONCAT(event_id, 
                         UNIX_MILLIS(start_datetime), 
                         event_attendees_email, 

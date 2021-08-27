@@ -39,10 +39,7 @@ SELECT * FROM (
         ,organizer_email
         ,_record_create_dt -- this is meaningless in a view, but for example
         ,unique_key 
-        ,RANK() OVER 
-            ( PARTITION BY unique_key
-            ORDER BY unique_key
-            ) AS rank
+        ,RANK() OVER ( PARTITION BY unique_key ORDER BY unique_key ) AS rank
     FROM stg_google_calendar_dates
 ) 
 WHERE rank = 1
