@@ -1,7 +1,9 @@
 WITH base_google_calendar AS
 (
     SELECT * FROM {{ source('dev_base', 'base_google_calendar') }}
-)
+),
+
+stg_google_calendar_raw AS (
 
 SELECT 
 
@@ -27,7 +29,18 @@ SELECT
     ,id AS event_id
     ,nextSyncToken AS google_next_sync_token
     ,CURRENT_TIMESTAMP() AS _record_create_dt
-
+    
 FROM base_google_calendar
 ,UNNEST(items) AS items
 ,UNNEST(attendees) AS attendees
+)
+
+SELECT 
+    stg_google_calendar_raw.*,
+    FARM_FINGERPRINT(CONCAT(event_id, 
+                        UNIX_MILLIS(start_datetime), 
+                        event_attendees_email, 
+                        google_next_sync_token)
+                        ) AS unique_key
+FROM stg_google_calendar_raw
+
