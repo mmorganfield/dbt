@@ -9,7 +9,7 @@ stg_google_calendar_dates AS (
     FROM stg_google_calendar
 )
 
-SELECT * FROM (
+SELECT DISTINCT * FROM (
     SELECT 
 
         CAST(FORMAT_TIMESTAMP("%Y%m%d", start_time) AS INT64 ) AS date_key
@@ -39,7 +39,6 @@ SELECT * FROM (
         ,organizer_email
         ,_record_create_dt -- this is meaningless in a view, but for example
         ,unique_key 
-        ,RANK() OVER ( PARTITION BY unique_key ORDER BY unique_key ) AS rank
+        
     FROM stg_google_calendar_dates
 ) 
-WHERE rank = 1
