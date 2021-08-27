@@ -26,16 +26,19 @@ models:
     warehouse: 
         staging:
             +materialized: view
-            stg_google_calendar:
-                +enabled: true
+            google_calendar:
+                stg_google_calendar:
+                    +enabled: true
         intermediate:
             +materialized: view
-            int_google_calendar:
-                +enabled: true
+            google_calendar:
+                int_google_calendar:
+                    +enabled: true
         prod_dw:
             +materialized: view
             google_calendar:
-                +enabled: true
+                google_calendar:
+                    +enabled: true
 
 
 # Packages applied to this project:
