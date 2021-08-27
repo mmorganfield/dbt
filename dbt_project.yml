@@ -33,7 +33,6 @@ models:
             int_google_calendar:
                 +enabled: true
         prod_dw:
-            +schema: prod_dw
             +materialized: view
             google_calendar:
                 +enabled: true
