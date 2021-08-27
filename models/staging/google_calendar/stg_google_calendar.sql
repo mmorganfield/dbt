@@ -39,8 +39,8 @@ SELECT
     stg_google_calendar_raw.*,
     FARM_FINGERPRINT(CONCAT(event_id, 
                         UNIX_MILLIS(start_datetime), 
-                        event_attendees_email, 
-                        google_next_sync_token)
+                        event_attendees_email
+                        )
                         ) AS unique_key
 FROM stg_google_calendar_raw
 
