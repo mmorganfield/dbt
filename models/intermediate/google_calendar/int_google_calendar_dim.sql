@@ -11,8 +11,8 @@ stg_google_calendar_dates AS (
 
 SELECT DISTINCT * FROM (
     SELECT 
-
-        CAST(FORMAT_TIMESTAMP("%Y%m%d", start_time) AS INT64 ) AS date_key
+        primary_key
+        ,CAST(FORMAT_TIMESTAMP("%Y%m%d", start_time) AS INT64 ) AS date_key
         ,location
         ,description
         -- ,event_recurrence
@@ -38,7 +38,7 @@ SELECT DISTINCT * FROM (
             AS is_organizer_self_ind
         ,organizer_email
         ,_record_create_dt -- this is meaningless in a view, but for example
-        ,unique_key 
+        
         
     FROM stg_google_calendar_dates
 ) 

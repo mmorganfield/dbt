@@ -4,4 +4,4 @@ WITH int_google_calendar AS (
 
 SELECT * 
 FROM int_google_calendar 
-WHERE unique_key IS NOT NULL
+WHERE primary_key IS NOT NULL

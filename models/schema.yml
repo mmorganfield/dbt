@@ -1,0 +1,56 @@
+version: 2
+
+models:
+    - name: google_calendar_dm
+
+      columns:
+        - name: location
+          description: "The virtual or physical location of an event" 
+
+        - name: description
+          description: "Any notes provided for the event"
+
+        - name: event_timezone
+          description: "The timezone in which an event was established. Default is MT"
+
+        - name: end_time
+          description: "The time an event ended, in the timezone of event_timezone"
+
+        - name: end_date
+          description: "The date the event ended"
+
+        - name: start_time
+          description: "The time an event started, in the timezone of event_timezone"
+
+        - name: start_date
+          description: "The date the event started"
+
+        - name: event_attendees_name
+          description: "If included in Google Contacts, name included"
+
+        - name: event_attendees_email
+          description: "The email of attendee"
+
+        - name: event_attendees_response_status
+          description: "The response of the attendee to the particular event invite"
+
+        - name: event_summary
+          description: "The summary or title of the event"
+
+        - name: event_updated_time
+          description: "The most recent updated time of an event"
+
+        - name: event_created_time
+          description: "The time at which the event was created"
+
+        - name: is_organizer_self_ind
+          description: "Indicates if the event was created by maxwell.morganfield@gmail.com"
+
+        - name: organizer_email
+          description: "The email of the person that created the event"
+
+        - name: _record_create_dt
+          description: "The timestamp of when a record was created"
+
+        - name: primary_key
+          description: "A surrogate key created from concatenated values for a single event"
