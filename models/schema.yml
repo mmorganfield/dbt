@@ -1,7 +1,7 @@
 version: 2
 
 models:
-    - name: google_calendar_dm
+    - name: google_calendar_dim
 
       columns:
         - name: location
