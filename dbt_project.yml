@@ -27,17 +27,17 @@ models:
         staging:
             +materialized: view
             google_calendar:
-                stg_google_calendar:
+                stg_google_calendar_dim:
                     +enabled: true
         intermediate:
             +materialized: view
             google_calendar:
-                int_google_calendar:
+                int_google_calendar_dim:
                     +enabled: true
         prod_dw:
             +materialized: view
             google_calendar:
-                google_calendar:
+                google_calendar_dim:
                     +enabled: true
 
 
