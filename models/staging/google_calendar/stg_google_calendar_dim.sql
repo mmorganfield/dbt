@@ -41,6 +41,6 @@ SELECT
                         UNIX_MILLIS(start_datetime), 
                         event_attendees_email
                         )
-                        ) AS unique_key
+                        ) AS primary_key
 FROM stg_google_calendar_raw
 

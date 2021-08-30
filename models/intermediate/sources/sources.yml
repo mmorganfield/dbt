@@ -4,5 +4,5 @@ sources:
     - name: dev_staging
       database: max-warehouse-323301
       tables:
-        - name: stg_google_calendar
+        - name: stg_google_calendar_dim
     
