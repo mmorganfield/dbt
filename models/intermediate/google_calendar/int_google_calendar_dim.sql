@@ -1,5 +1,5 @@
 WITH stg_google_calendar AS (
-    SELECT * FROM {{ source( 'dev_staging', 'stg_google_calendar') }}
+    SELECT * FROM {{ source( 'dev_staging', 'stg_google_calendar_dim') }}
 ),
 
 stg_google_calendar_dates AS (
@@ -30,10 +30,10 @@ SELECT DISTINCT * FROM (
         ,organizer_name
         ,CASE 
             WHEN is_organizer_self
-                THEN 1
+                THEN true
             WHEN is_organizer_self IS NULL 
-                THEN 0
-            ELSE 0
+                THEN false
+            ELSE false
             END
             AS is_organizer_self_ind
         ,organizer_email
