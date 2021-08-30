@@ -15,7 +15,6 @@ SELECT DISTINCT * FROM (
         ,CAST(FORMAT_TIMESTAMP("%Y%m%d", start_time) AS INT64 ) AS date_key
         ,location
         ,description
-        -- ,event_recurrence
         ,event_timezone
         ,end_time
         ,DATE(end_time) AS end_date
