@@ -5,4 +5,5 @@ sources:
       database: max-warehouse-323301
       tables:
         - name: stg_google_calendar_dim
+        - name: stg_ebird
     

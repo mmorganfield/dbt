@@ -29,15 +29,24 @@ models:
             google_calendar:
                 stg_google_calendar_dim:
                     +enabled: true
+            ebird:
+                stg_ebird:
+                    +enabled: true
         intermediate:
             +materialized: view
             google_calendar:
                 int_google_calendar_dim:
                     +enabled: true
+            ebird:
+                int_ebird:
+                    +enabled: true
         prod_dw:
             +materialized: view
             google_calendar:
                 google_calendar_dim:
+                    +enabled: true
+            ebird: 
+                ebird:
                     +enabled: true
 
 
