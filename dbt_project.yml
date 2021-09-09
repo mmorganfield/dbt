@@ -45,6 +45,9 @@ models:
             google_calendar:
                 google_calendar_dim:
                     +enabled: true
+            ebird: 
+                ebird:
+                    +enabled: true
 
 
 # Packages applied to this project:
