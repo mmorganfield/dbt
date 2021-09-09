@@ -11,6 +11,7 @@ WITH base_ebird AS (
         ,obsDt as obs_dttm
         ,locId as loc_id
         ,sciName as sci_name
+        ,howMany as how_many
         ,locationPrivate as loc_private
         ,comName as common_name
     FROM base_ebird
