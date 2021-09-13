@@ -5,7 +5,7 @@ WITH stg_ebird AS (
 SELECT DISTINCT * FROM (
     SELECT
         primary_key
-        ,FORMAT_TIMESTAMP("Y%m%d%", obs_dttm) as date_key
+        ,FORMAT_TIMESTAMP("%Y%m%d", obs_dttm) as date_key
         ,obs_reviewed
         ,sub_id
         ,obs_valid
