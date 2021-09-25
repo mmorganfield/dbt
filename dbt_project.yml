@@ -32,6 +32,13 @@ models:
             ebird:
                 stg_ebird:
                     +enabled: true
+            covid:
+                stg_county_cases:
+                    +enabled: true
+                stg_county_mask_use:
+                    +enabled: true
+                stg_excess_deaths:
+                    +enabled: true
         intermediate:
             +materialized: view
             google_calendar:
