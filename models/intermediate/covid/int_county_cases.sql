@@ -20,5 +20,5 @@ WITH stg_county_cases AS (
 
 SELECT 
       int_county_cases.*
-      ,FARM_FINGERPRINT(date_key, county) AS unique_key
+      ,FARM_FINGERPRINT(CONCAT(date_key, county)) AS unique_key
 FROM int_county_cases
