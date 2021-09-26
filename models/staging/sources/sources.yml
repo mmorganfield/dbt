@@ -6,3 +6,16 @@ sources:
       tables:
         - name: base_google_calendar
         - name: base_ebird
+    - name: covid_cases
+      database: bigquery-public-data
+      schema: covid19_nyt
+      tables:
+        - name: excess_deaths
+        - name: mask_use_by_county
+        - name: us_counties
+        - name: us_states
+    - name: covid_airport  
+      database: bigquery-public-data
+      schema: covid19_geotab_mobility_impact
+      tables:
+        - name: airport_traffic

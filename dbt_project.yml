@@ -32,6 +32,13 @@ models:
             ebird:
                 stg_ebird:
                     +enabled: true
+            covid:
+                stg_county_cases:
+                    +enabled: true
+                stg_county_mask_use:
+                    +enabled: true
+                stg_excess_deaths:
+                    +enabled: true
         intermediate:
             +materialized: view
             google_calendar:
@@ -39,6 +46,9 @@ models:
                     +enabled: true
             ebird:
                 int_ebird:
+                    +enabled: true
+            covid: 
+                int_county_cases:
                     +enabled: true
         prod_dw:
             +materialized: view
@@ -48,6 +58,9 @@ models:
             ebird: 
                 ebird:
                     +enabled: true
+            covid:
+                county_cases:
+                    enabled: true
 
 
 # Packages applied to this project:

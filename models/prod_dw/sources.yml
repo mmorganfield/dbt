@@ -6,3 +6,4 @@ sources:
       tables:
         - name: int_google_calendar_dim
         - name: int_ebird
+        - name: int_county_cases
