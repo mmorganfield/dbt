@@ -1,7 +1,8 @@
 WITH stg_county_cases AS (
-    SELECT * FROM `max-warehouse-323301.dbt_mmorganfield.stg_county_cases` --{{ source('dev_staging', 'stg_county_cases')}}
-)
+    
+    SELECT * FROM {{ source('dev_staging', 'stg_county_cases')}}
 
+)
 SELECT
     FORMAT_DATE("%Y%m%d", date) AS date_key
     ,date
