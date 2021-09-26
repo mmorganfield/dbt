@@ -47,6 +47,9 @@ models:
             ebird:
                 int_ebird:
                     +enabled: true
+            covid: 
+                int_county_cases:
+                    +enabled: true
         prod_dw:
             +materialized: view
             google_calendar:
