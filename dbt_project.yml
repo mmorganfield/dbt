@@ -58,6 +58,9 @@ models:
             ebird: 
                 ebird:
                     +enabled: true
+            covid:
+                county_cases:
+                    enabled: true
 
 
 # Packages applied to this project:
