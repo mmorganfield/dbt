@@ -1,5 +1,5 @@
 WITH stg_ebird AS (
-    SELECT * FROM {{ source('dev_staging', 'stg_ebird')}}
+    SELECT * FROM {{ ref('stg_ebird')}}
 )
 
 SELECT DISTINCT * FROM (

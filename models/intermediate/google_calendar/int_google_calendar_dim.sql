@@ -1,5 +1,5 @@
 WITH stg_google_calendar AS (
-    SELECT * FROM {{ source( 'dev_staging', 'stg_google_calendar_dim') }}
+    SELECT * FROM {{ ref( 'stg_google_calendar_dim') }}
 ),
 
 stg_google_calendar_dates AS (
