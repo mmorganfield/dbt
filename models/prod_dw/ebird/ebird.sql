@@ -1,5 +1,5 @@
 WITH int_ebird AS (
-    SELECT * FROM {{ source('dev_intermediate', 'int_ebird')}}
+    SELECT * FROM {{ ref( 'int_ebird')}}
 )
 
 SELECT 

@@ -1,6 +1,6 @@
 WITH stg_county_cases AS (
     
-    SELECT * FROM {{ source('dev_staging', 'stg_county_cases')}}
+    SELECT * FROM {{ ref('stg_county_cases')}}
 
 ), int_county_cases AS (
     SELECT
