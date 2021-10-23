@@ -1,5 +1,5 @@
 WITH stg_ebird AS (
-    SELECT * FROM {{ ref('stg_ebird')}}
+    SELECT * FROM {{ ref('stg_ebird_obs')}}
 )
 
 SELECT DISTINCT * FROM (
