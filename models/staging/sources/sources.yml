@@ -3,9 +3,28 @@ version: 2
 sources:
     - name: dev_base
       database: max-warehouse-323301
+      loader: gcloud storage
       tables:
+        - name: base_ebird_hotspots
+          description: "An external table of eBird Hotspot information"
+          external:
+            location: "gs://max-warehouse-results/ebird/hotspots/*.json"
+            options: 
+                format: json
         - name: base_google_calendar
+          description: "An external table of Google Calendar data for maxwell.morganfield@gmail.com"
+          external:
+            location: "gs://max-warehouse-results/google-calendar/*.json"
+            options:
+                format: json
         - name: base_ebird
+          description: "An external table of eBird observations data"
+          external:
+            location: "gs://max-warehouse-results/ebird/*.json"
+            options:
+                format: json
+        - name: base_espresso_history
+          description: "A history of my home espresso shots"
     - name: covid_cases
       database: bigquery-public-data
       schema: covid19_nyt
