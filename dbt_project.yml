@@ -31,7 +31,7 @@ models:
                 stg_google_calendar_dim:
                     +enabled: true
             ebird:
-                stg_ebird:
+                stg_ebird_obs:
                     +enabled: true
             covid:
                 stg_county_cases:
@@ -47,7 +47,7 @@ models:
                 int_google_calendar_dim:
                     +enabled: true
             ebird:
-                int_ebird:
+                int_ebird_obs:
                     +enabled: true
             covid: 
                 int_county_cases:
@@ -58,7 +58,7 @@ models:
             google_calendar:
                 google_calendar_dim:
                     +enabled: true
-            ebird: 
+            ebird_obs: 
                 ebird:
                     +enabled: true
             covid:
