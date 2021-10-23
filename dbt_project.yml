@@ -41,7 +41,7 @@ models:
                 stg_excess_deaths:
                     +enabled: true
         intermediate:
-            +schema: this_is_test
+            +schema: dev_intermediate
             +materialized: view
             google_calendar:
                 int_google_calendar_dim:
@@ -53,6 +53,7 @@ models:
                 int_county_cases:
                     +enabled: true
         prod_dw:
+            +schema: prod_dw
             +materialized: view
             google_calendar:
                 google_calendar_dim:
