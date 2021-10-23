@@ -25,6 +25,7 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
     warehouse: 
         staging:
+            +schema: dev_staging
             +materialized: view
             google_calendar:
                 stg_google_calendar_dim:
@@ -40,6 +41,7 @@ models:
                 stg_excess_deaths:
                     +enabled: true
         intermediate:
+            +schema: dev_intermediate
             +materialized: view
             google_calendar:
                 int_google_calendar_dim:
@@ -51,6 +53,7 @@ models:
                 int_county_cases:
                     +enabled: true
         prod_dw:
+            +schema: prod_dw
             +materialized: view
             google_calendar:
                 google_calendar_dim:
