@@ -5,7 +5,7 @@ sources:
       database: max-warehouse-323301
       tables:
         - name: stg_google_calendar_dim
-        - name: stg_ebird
+        - name: stg_ebird_obs
         - name: stg_county_cases
         - name: stg_county_mask_use
         - name: stg_excess_deaths

@@ -1,0 +1,6 @@
+version: 2
+
+snapshots:
+  - name: int_ebird_hotspots
+    docs:
+      show: true
