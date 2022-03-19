@@ -52,6 +52,7 @@ models:
             covid: 
                 int_county_cases:
                     +enabled: true
+                    +re_data_monitored: true
         prod_dw:
             +schema: prod_dw
             +materialized: view
@@ -59,13 +60,23 @@ models:
                 google_calendar_dim:
                     +enabled: true
                     +re_data_monitored: true
+                    +re_data_metrics:
+                        table:
+                            - row_count
             ebird_obs: 
                 ebird:
                     +enabled: true
                     +re_data_monitored: true
+                    +re_data_metrics:
+                        table:
+                            - row_count
             covid:
                 county_cases:
                     enabled: true
+                    +re_data_monitored: true
+                    +re_data_metrics:
+                        table:
+                            - row_count
 
 
 # Packages applied to this project:
