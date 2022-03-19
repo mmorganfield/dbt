@@ -58,9 +58,11 @@ models:
             google_calendar:
                 google_calendar_dim:
                     +enabled: true
+                    +re_data_monitored: true
             ebird_obs: 
                 ebird:
                     +enabled: true
+                    +re_data_monitored: true
             covid:
                 county_cases:
                     enabled: true
