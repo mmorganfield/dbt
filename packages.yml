@@ -1,3 +1,6 @@
 packages:
   - package: dbt-labs/dbt_external_tables
-    version: 0.7.0
+    version: 0.8.0
+
+  - package: re-data/re_data
+    version: [">=0.7.0", "<0.8.0"]
