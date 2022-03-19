@@ -63,8 +63,8 @@ models:
                     +re_data_metrics:
                         table:
                             - row_count
-            ebird_obs: 
-                ebird:
+            ebird: 
+                ebird_obs:
                     +enabled: true
                     +re_data_monitored: true
                     +re_data_metrics:
