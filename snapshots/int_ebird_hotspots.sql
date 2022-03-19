@@ -3,12 +3,14 @@
         config(
             target_database = "max-warehouse-323301",
             target_schema = "dev_intermediate",
-            unique_key = "loc_id",
+            unique_key = "unique_key",
             strategy = "timestamp",
             updated_at = "extracted_at"
             )
     }}
 
-    SELECT * FROM {{ ref( 'stg_ebird_hotspots') }}
+    SELECT 
+        DISTINCT * 
+    FROM {{ ref( 'stg_ebird_hotspots') }}
 
 {% endsnapshot %}

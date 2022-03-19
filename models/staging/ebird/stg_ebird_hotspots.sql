@@ -3,6 +3,7 @@ WITH base_ebird_hotspots AS (
         *,
          _file_name as file_name 
     FROM {{ source('dev_base', 'base_ebird_hotspots') }}
+
 ),  stg_ebird_hotspots_raw AS (
     SELECT
         numSpeciesAllTime as total_species
@@ -15,7 +16,18 @@ WITH base_ebird_hotspots AS (
         ,countryCode as country_code
         ,locId as loc_id
         ,PARSE_TIMESTAMP('%Y-%m-%d%H:%M:%S', REGEXP_EXTRACT(file_name,r'(\d{4}-\d{2}-\d{4}:\d{2}:\d{2})')) as extracted_at
-        FROM base_ebird_hotspots
+        ,FARM_FINGERPRINT(CONCAT(
+            numSpeciesAllTime, locId, latestObsDt
+        )) as unique_key
+    FROM base_ebird_hotspots
 )
 
-SELECT * FROM stg_ebird_hotspots_raw ORDER BY loc_name
+SELECT * FROM (
+SELECT 
+    *,
+    RANK() OVER (
+        PARTITION BY loc_id
+        ORDER BY latest_obs_dt
+    )
+FROM stg_ebird_hotspots_raw 
+) 
