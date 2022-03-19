@@ -7,10 +7,10 @@ profile: 'default'
 
 # Paths to files:
 
-source-paths: ["models"]
+model-paths: ["models"]
 analysis-paths: ["analysis"]
 test-paths: ["tests"]
-data-paths: ["data"]
+seed-paths: ["data"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
 
@@ -52,18 +52,31 @@ models:
             covid: 
                 int_county_cases:
                     +enabled: true
+                    +re_data_monitored: true
         prod_dw:
             +schema: prod_dw
             +materialized: view
             google_calendar:
                 google_calendar_dim:
                     +enabled: true
-            ebird_obs: 
-                ebird:
+                    +re_data_monitored: true
+                    +re_data_metrics:
+                        table:
+                            - row_count
+            ebird: 
+                ebird_obs:
                     +enabled: true
+                    +re_data_monitored: true
+                    +re_data_metrics:
+                        table:
+                            - row_count
             covid:
                 county_cases:
                     enabled: true
+                    +re_data_monitored: true
+                    +re_data_metrics:
+                        table:
+                            - row_count
 
 
 # Packages applied to this project:
@@ -72,3 +85,34 @@ packages:
   - package: dbt-labs/dbt_external_tables
     version: 0.7.0
         
+
+vars:
+  # (optional) if not passed, stats for last day will be computed
+  re_data:time_window_start: '{{ (run_started_at - modules.datetime.timedelta(1)).strftime("%Y-%m-%d 00:00:00") }}'
+  re_data:time_window_end: '{{ run_started_at.strftime("%Y-%m-%d 00:00:00") }}'
+
+  # (optional) override standard metrics computed for all your tables
+  re_data:metrics_base:
+    table:
+      - row_count
+      - freshness
+      
+    column:
+      numeric:
+        - min
+        - max
+        - avg
+        - stddev
+        - variance
+        - nulls_count
+        - diff # my own custom metric
+        
+      text:
+        - min_length
+        - max_length
+        - avg_length
+        - nulls_count
+        - missing_count
+
+  # (optional) tells how much hisory you want to consider when looking for anomalies
+  re_data:anomaly_detection_look_back_days: 30
