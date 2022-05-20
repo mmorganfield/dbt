@@ -20,9 +20,65 @@ sources:
         - name: base_ebird
           description: "An external table of eBird observations data"
           external:
-            location: "gs://max-warehouse-results/ebird/*.json"
+            location: "gs://max-warehouse-results/ebird/ebird*.json"
             options:
                 format: json
+            columns:
+              - name: obsReviewed
+                data_type: string
+              - name: obsValid
+                data_type: string
+              - name: lng
+                data_type: string
+              - name: speciesCode
+                data_type: string
+              - name: lat 
+                data_type: string
+              - name: obsDt
+                data_type: string
+              - name: locId
+                data_type: string
+              - name: sciName
+                data_type: string
+              - name: comName
+                data_type: string
+              - name: locName
+                data_type: string
+              - name: howMany
+                data_type: string
+              - name: locationPrivate
+                data_type: string
+        - name: base_ebird_1
+          description: "An external table of eBird observations data"
+          external:
+            location: "gs://max-warehouse-results/ebird/ebird*.json"
+            options:
+                format: json
+            columns:
+              - name: obsReviewed
+                data_type: string
+              - name: obsValid
+                data_type: string
+              - name: lng
+                data_type: string
+              - name: speciesCode
+                data_type: string
+              - name: lat 
+                data_type: string
+              - name: obsDt
+                data_type: string
+              - name: locId
+                data_type: string
+              - name: sciName
+                data_type: string
+              - name: comName
+                data_type: string
+              - name: locName
+                data_type: string
+              - name: howMany
+                data_type: string
+              - name: locationPrivate
+                data_type: string
         - name: base_espresso_history
           description: "A history of my home espresso shots"
     - name: covid_cases
