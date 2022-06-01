@@ -1,11 +1,11 @@
 WITH stg_ebird AS (
-    SELECT * FROM {{ ref('stg_ebird_obs')}}
+    SELECT * FROM {{ ref('stg_ebird_obs') }}
 )
 
 SELECT DISTINCT * FROM (
     SELECT
         primary_key
-        ,FORMAT_TIMESTAMP("%Y%m%d", obs_dttm) as date_key
+        ,FORMAT_TIMESTAMP("%Y%m%d", DATE(obs_dttm, 'America/Denver') as date_key
         ,obs_reviewed
         ,sub_id
         ,obs_valid
@@ -19,4 +19,5 @@ SELECT DISTINCT * FROM (
         ,how_many
         ,loc_name
         ,common_name
-    FROM stg_ebird)
+    FROM 
+        stg_ebird )
