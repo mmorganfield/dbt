@@ -12,7 +12,7 @@ SELECT DISTINCT * FROM (
         ,longitude
         ,latitude
         ,obs_dttm
-        ,DATE(obs_dttm) as                                              obs_date
+        ,DATE(obs_dttm) as                                               obs_date
         ,loc_id
         ,sci_name
         ,loc_private
