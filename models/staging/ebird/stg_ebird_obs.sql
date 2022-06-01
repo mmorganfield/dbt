@@ -1,6 +1,7 @@
 WITH base_ebird AS (
-    SELECT * FROM {{ source('dev_base', 'base_ebird')}}
-),   stg_ebird_raw AS (
+    SELECT * FROM {{ source('dev_base', 'base_ebird') }}
+),   
+    stg_ebird_raw AS (
     SELECT
         obsReviewed as          obs_reviewed
         ,subId as               sub_id
