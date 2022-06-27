@@ -12,7 +12,9 @@
             {% set for_cols = fromjson(re_data.row_value(mtable, 'columns')) %}
             {% set for_cols_dict = re_data.dict_from_list(for_cols) %}
             {% set table_name = re_data.full_table_name_values(name, schema, database) %}
- 
+
+            -- (todo: dejii): possible optimization: query re_data_columns only once before the loop, and store results in an efficient way (e.g. in a dict) and look up using a key (name_schema_database)
+            -- currently, we query re_data_columns for each table
             {% set columns_query %}
                 select * from {{ ref('re_data_columns') }}
                 where name = '{{ name }}' and schema = '{{ schema }}' and database = '{{ database }}'
@@ -20,7 +22,7 @@
 
             {% set columns = run_query(columns_query) %}
 
-            {{ log('[re_data_log] - start computing metrics for table:' ~ table_name, True)}}
+            {{ dbt_utils.log_info('[re_data_log] - start computing metrics for table:' ~ table_name) }}
 
             {% set columns_to_query = [] %}
             {% set size = columns_to_query| length %}
@@ -44,14 +46,12 @@
                     {% endif %}
                     {% do columns_to_query.clear() %}
                 {% endif %}
-
             {% endfor %}
 
             {%- set insert_stats_query = re_data.metrics_base_insert(table_name, time_filter, metrics, ref_model, columns_to_query, table_level=True) -%}
             {% do run_query(insert_stats_query) %}
 
-            {% set finish_timestamp = dbt_utils.current_timestamp() %} 
-            {{ log('[re_data_log] - finished computing metrics for table:' ~ table_name, True)}}
+            {{ dbt_utils.log_info('[re_data_log] - finished computing metrics for table:' ~ table_name) }}
         {% endif %}
     {% endfor %}
 {% endmacro %}
@@ -73,12 +73,7 @@
     from 
         {{ table_name }}
     where
-        {# /* If not time_filter is specified, we compute the metric over the entire table else we filter for the time frame */ #}
-        {% if time_filter is none %}
-            true
-        {% else %}
-            {{ in_time_window(time_filter) }}
-        {% endif %}
+        {{ in_time_window(time_filter) }}
     )
 
     {%- for col_expr in col_exprs %}
