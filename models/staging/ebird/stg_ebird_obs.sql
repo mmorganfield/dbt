@@ -18,11 +18,15 @@ WITH base_ebird AS (
             THEN 
                 TIMESTAMP(obsDt) 
             ELSE 
-                PARSE_TIMESTAMP("%F %H:%M", obsDt, 'America/Denver')
+                PARSE_TIMESTAMP("%F %H:%M", obsDt, 
+                                'America/Denver')
             END, 'America/Denver') as              obs_dttm
         ,locId as                                  loc_id
         ,sciName as                                sci_name
-        ,SAFE_CAST(howMany AS INT64) as            how_many
+        ,CAST(
+        RTRIM(
+        NULLIF(
+            howMany, 'nan'), '.0') AS INT64) as    how_many
         ,locName as                                loc_name
         ,SAFE_CAST(locationPrivate AS BOOL) as     loc_private
         ,comName as                                common_name
