@@ -5,26 +5,60 @@ sources:
       database: max-warehouse-323301
       loader: gcloud storage
       tables:
+      
         - name: base_ebird_hotspots
           description: "An external table of eBird Hotspot information"
           external:
             location: "gs://max-warehouse-results/ebird/hotspots/*.json"
             options: 
                 format: json
+       
         - name: base_google_calendar
           description: "An external table of Google Calendar data for maxwell.morganfield@gmail.com"
           external:
             location: "gs://max-warehouse-results/google-calendar/*.json"
             options:
                 format: json
+       
         - name: base_ebird
           description: "An external table of eBird observations data"
+          
           external:
-            location: "gs://max-warehouse-results/ebird/*.json"
+            
+            location: "gs://max-warehouse-results/ebird/ebird*.json"
+            
             options:
                 format: json
+            
+            columns:
+              - name: obsReviewed
+                data_type: string
+              - name: obsValid
+                data_type: string
+              - name: lng
+                data_type: string
+              - name: speciesCode
+                data_type: string
+              - name: lat 
+                data_type: string
+              - name: obsDt
+                data_type: string
+              - name: locId
+                data_type: string
+              - name: sciName
+                data_type: string
+              - name: comName
+                data_type: string
+              - name: locName
+                data_type: string
+              - name: howMany
+                data_type: string
+              - name: locationPrivate
+                data_type: string
+  
         - name: base_espresso_history
           description: "A history of my home espresso shots"
+    
     - name: covid_cases
       database: bigquery-public-data
       schema: covid19_nyt
@@ -33,6 +67,7 @@ sources:
         - name: mask_use_by_county
         - name: us_counties
         - name: us_states
+    
     - name: covid_airport  
       database: bigquery-public-data
       schema: covid19_geotab_mobility_impact

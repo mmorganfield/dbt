@@ -26,13 +26,16 @@ models:
     warehouse: 
         staging:
             +schema: dev_staging
-            +materialized: view
+            +materialized: table
             google_calendar:
                 stg_google_calendar_dim:
                     +enabled: true
             ebird:
                 stg_ebird_obs:
                     +enabled: true
+                    +re_data_metrics:
+                        table:
+                            - row_count
             covid:
                 stg_county_cases:
                     +enabled: true
@@ -42,20 +45,24 @@ models:
                     +enabled: true
         intermediate:
             +schema: dev_intermediate
-            +materialized: view
+            +materialized: incremental
             google_calendar:
                 int_google_calendar_dim:
                     +enabled: true
             ebird:
                 int_ebird_obs:
                     +enabled: true
+                    +re_data_monitored: true
+                    +re_data_metrics:
+                        table:
+                            - row_count
             covid: 
                 int_county_cases:
                     +enabled: true
                     +re_data_monitored: true
         prod_dw:
             +schema: prod_dw
-            +materialized: view
+            +materialized: table
             google_calendar:
                 google_calendar_dim:
                     +enabled: true
@@ -83,7 +90,9 @@ models:
 
 packages:
   - package: dbt-labs/dbt_external_tables
-    version: 0.7.0
+    version: 0.8.0
+  - package: re_data/re_data
+    version: 0.9.2
         
 
 vars:

@@ -6,7 +6,7 @@
     {{ timestamp_col }} as {{ re_data.quote_column('computed_on') }},
 {% endmacro %}
 
-{% macro generate_overview(start_date, end_date, interval, overview_path=None) %}
+{% macro generate_overview(start_date, end_date, interval, overview_path=None, monitored_path=None) %}
 -- depends_on: {{ ref('re_data_anomalies') }}
 -- depends_on: {{ ref('re_data_base_metrics') }}
 -- depends_on: {{ ref('re_data_schema_changes') }}
@@ -22,7 +22,7 @@
     {% else %}
         {{ exceptions.raise_compiler_error("Invalid interval. Got: " ~ interval) }}
     {% endif %}
-    {{ log('[re_data] interval length in seconds is ' ~ interval_length_sec, info=True) }}
+    {{ dbt_utils.log_info('[re_data] interval length in seconds is ' ~ interval_length_sec) }}
     {% set overview_query %}
         with schema_changes_casted as (
             select id, table_name, operation, column_name, data_type, {{ bool_to_string('is_nullable') }}, prev_column_name, prev_data_type, {{ bool_to_string('prev_is_nullable') }}, detected_time
@@ -76,14 +76,11 @@
             {{ to_single_json(['type', 'model', 'message', 'value', 'time_window_end']) }} as {{ re_data.quote_column('data') }}
         from
             {{ ref('re_data_alerts') }}
-    ) union all
-    (
-        select
-            {{ overview_select_base('test', 'run_at')}}
-            {{ to_single_json(['status', 'test_name', 'run_at']) }} as {{ re_data.quote_column('data') }}
-        from
-            {{ ref('re_data_test_history') }}
-        where date(run_at) between '{{start_date}}' and '{{end_date}}' 
+        where
+            case
+                when type = 'anomaly' then time_window_end between '{{ start_date }}' and '{{ end_date }}'
+                else time_window_end >= '{{ start_date }}'
+            end
     )
     order by {{ re_data.quote_column('computed_on')}} desc
     {% endset %}
@@ -91,4 +88,6 @@
     {% set overview_result = run_query(overview_query) %}
     {% set overview_file_path = overview_path or 'target/re_data/overview.json' %}
     {% do overview_result.to_json(overview_file_path) %}
+    {{ save_monitored(monitored_path) }}
+
 {% endmacro %}

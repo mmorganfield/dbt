@@ -3,19 +3,41 @@
     {% set both = []%}
     {% do both.extend(graph.nodes.values()) %}
     {% do both.extend(graph.sources.values()) %}
+    {% set owners_config = re_data.get_owners_config() %}
+
+    {% set select_var = var('re_data:select') %}
+    {% set select_all = true %}
+
+    {% set selected_nodes = none %}
+    {% if select_var is not none %}
+        {% set select_all = false %}
+        {% set selected_nodes = dict() %}
+        {% for el in select_var %}
+            {% do selected_nodes.update({el: True}) %}
+        {% endfor %}
+    {% endif %}
 
     {% for el in both %}
         {% if el.resource_type in ['model', 'seed', 'source'] %}
             {% if el.config.get('re_data_monitored') %}
-            
+                {% set target_name = el.identifier or el.alias or el.name %}
+
+                {% if select_all %}
+                    {% set selected = true %}
+                {% else %}
+                    {% set selected = selected_nodes.get(target_name, false) %}
+                {% endif %}
+
                 {% do monitored.append({
-                    'name': re_data.name_in_db(el.identifier or el.name),
+                    'name': re_data.name_in_db(target_name),
                     'schema': re_data.name_in_db(el.schema),
                     'database': re_data.name_in_db(el.database),
                     'time_filter': el.config.get('re_data_time_filter', none),
                     'metrics': re_data.metrics_in_db(el.config.get('re_data_metrics', {})),
                     'columns': re_data.columns_in_db(el.config.get('re_data_columns', [])),
                     'anomaly_detector': el.config.get('re_data_anomaly_detector', var('re_data:anomaly_detector', {})),
+                    'owners': re_data.prepare_model_owners(el.config.get('re_data_owners', []), owners_config),
+                    'selected': selected
                     })
                 %}
             {% endif %}
@@ -25,71 +47,29 @@
     {{ return(monitored) }}
 {% endmacro %}
 
-{% macro pub_monitored_from_vars() %}
-    {% set monitored = [] %}
-    {% for group in var('re_data:monitored') %}
-        {% for table in group['tables'] %}
-            {% do monitored.extend(priv_get_monitored_from_group(table, group)) %}
+{% macro get_owners_config() %}
+    {% set owners_config = var('re_data:owners_config', {}) %}
+    {{ return (owners_config) }}
+{% endmacro %}
+
+{% macro prepare_model_owners(re_data_owners, owners_config) %}
+    {% set owners = {} %}
+    {% set seen_identifiers = {} %}
+    {% for owner in re_data_owners if owners_config.get(owner) %}
+        {% set members = owners_config.get(owner) %}
+        {% for member in members %}
+            {% set identifier = member.get('identifier') %}
+            {% if identifier not in seen_identifiers %}
+            {% do seen_identifiers.update({identifier: true }) %}
+            {% do owners.update({
+                identifier: {
+                    'notify_channel': member.get('type'),
+                    'owner': owner,
+                    'name': member.get('name') 
+                } 
+            }) %}
+            {% endif %}
         {% endfor %}
     {% endfor %}
-
-    {{ return(monitored) }}
-{% endmacro %}
-
-{% macro priv_get_monitored_from_group(table, group) %}
-    
-    {% set name = table['name'] %}
-    {% set schema = priv_schema_spec('schema', table, group) %}
-    {% set database = priv_schema_spec('database', table, group) %}
-    {% set time_filter = priv_monitored_spec('time_filter', table, group) %}
-    {% set metrics = table.get('metrics', {}) %}
-    {% set columns = table.get('columns', []) %}
-    
-    {{ return ([{
-        'name': re_data.name_in_db(name),
-        'schema': re_data.name_in_db(schema),
-        'database': re_data.name_in_db(database),
-        'time_filter': time_filter,
-        'metrics': re_data.metrics_in_db(metrics),
-        'columns': re_data.columns_in_db(columns),
-        'anomaly_detector': var('re_data:anomaly_detector', {}),
-        }]) 
-    }}
-
-{% endmacro %}
-
-{% macro priv_monitored_spec(par_name, table, group) %}
-    {% if table.get(par_name) is not none %}
-        {{ return (table[par_name]) }}
-    {% elif group.get(par_name) is not none %}
-        {{ return (group[par_name]) }}
-    {% else %}
-        {{ return (none) }}
-    {% endif %}
-{% endmacro %}
-
-{% macro priv_schema_spec(par_name, table, group) %}
-    {% set name = table['name'] %}
-    {% set package = project_name %}
-
-    {% if table[par_name] %}
-        {{ return (table[par_name]) }}
-    {% elif group[par_name] %}
-        {{ return (group[par_name]) }}
-    {% else %}
-        {% set suffix = '.' + package + '.' + name %}
-        {% set ns = namespace(graph_node=graph.nodes.get('model' + suffix) or graph.nodes.get('seed' + suffix)) %}    
-        {% if not ns.graph_node %}
-            {% set schema_name = table.get('schema') or target.schema %}
-            {% set source_name = 'source' + '.' + project_name + '.' + schema_name + '.' + table['name'] %}
-            {% set ns.graph_node = graph.sources.get(source_name) %}
-        {% endif %}
-
-        {% if ns.graph_node %}
-            {{ return (ns.graph_node[par_name]) }}
-        {% else %}
-            {{ log('[re_data_log] - error no dbt graph node found for ' ~ table, True) }}
-            {{ return (none) }}
-        {% endif %}
-    {% endif %}
+    {{ return (owners) }}
 {% endmacro %}
