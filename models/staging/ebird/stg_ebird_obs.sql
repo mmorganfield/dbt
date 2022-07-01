@@ -1,21 +1,34 @@
 WITH base_ebird AS (
-    SELECT * FROM {{ source('dev_base', 'base_ebird') }}
+    SELECT *,
+    _FILE_NAME as file_name
+    FROM {{ source('dev_base', 'base_ebird') }}
 ),   
     stg_ebird_raw AS (
+    
     SELECT
-        obsReviewed as          obs_reviewed
-        ,subId as               sub_id
-        ,obsValid as            obs_valid
-        ,lng as                 longitude
-        ,lat as                 latitude
-        ,speciesCode as         species_code
-        ,obsDt as               obs_dttm
-        ,locId as               loc_id
-        ,sciName as             sci_name
-        ,howMany as             how_many
-        ,locName as             loc_name
-        ,locationPrivate as     loc_private
-        ,comName as             common_name
+        SAFE_CAST(obsReviewed AS BOOL) as          obs_reviewed
+        ,subId as                                  sub_id
+        ,SAFE_CAST(obsValid AS BOOL) as            obs_valid
+        ,SAFE_CAST(lng AS FLOAT64)  as             longitude
+        ,SAFE_CAST(lat AS FLOAT64) as              latitude
+        ,speciesCode as                            species_code
+        ,DATETIME(CASE 
+            WHEN 
+                length(obsDt) = 10
+            THEN 
+                TIMESTAMP(obsDt) 
+            ELSE 
+                PARSE_TIMESTAMP("%F %H:%M", obsDt, 'America/Denver')
+            END, 'America/Denver') as              obs_dttm
+        ,locId as                                  loc_id
+        ,sciName as                                sci_name
+        ,SAFE_CAST(howMany AS INT64) as            how_many
+        ,locName as                                loc_name
+        ,SAFE_CAST(locationPrivate AS BOOL) as     loc_private
+        ,comName as                                common_name
+        ,file_name as                              file_name
+        ,REGEXP_EXTRACT(file_name,
+        r'(\d{4}-\d{2}-\d{4}:\d{2}:\d{2}.\d+)') as extracted_at                    
     FROM 
         base_ebird
     )
