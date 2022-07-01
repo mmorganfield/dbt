@@ -39,6 +39,7 @@ SELECT
                     obs_dttm
                     ,species_code 
                     ,loc_id
+                    ,sub_id
     )) as primary_key
 FROM stg_ebird_raw
 ORDER BY primary_key
