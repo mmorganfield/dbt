@@ -40,7 +40,7 @@ SELECT DISTINCT * FROM (
 
         {% if is_incremental() %}
 
-        WHERE DATE(obs_dttm) > (SELECT MAX(obs_date) FROM {{ this }})
+        WHERE obs_dttm > (SELECT obs_dttm FROM {{ this }})
 
         {% endif %}
         )
