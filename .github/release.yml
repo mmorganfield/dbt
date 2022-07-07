@@ -1,0 +1,12 @@
+changelog:
+  categories:
+    - title: New Models 🆕❕
+      labels:
+        - new-model
+    - title: New Feature 🎉
+      labels:
+        - feature 
+        - enhancement
+    - title: Fixes 🤜🪲
+      labels: 
+        - bug
