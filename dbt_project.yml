@@ -60,6 +60,7 @@ models:
                 int_county_cases:
                     +enabled: true
                     +re_data_monitored: true
+                    +materialized: table
         prod_dw:
             +schema: prod_dw
             +materialized: table
