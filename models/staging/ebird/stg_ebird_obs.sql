@@ -1,5 +1,6 @@
 WITH base_ebird AS (
-    SELECT *,
+    SELECT 
+    *,
     _FILE_NAME as file_name
     FROM {{ source('dev_base', 'base_ebird') }}
 ),   
