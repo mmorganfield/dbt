@@ -7,10 +7,10 @@ WITH base_ebird_hotspots AS (
 
 stg_ebird_hotspots_raw AS (
 SELECT
-    SAFE_CAST(numSpeciesAllTime AS INT64) as                            species_all_time
-    ,PARSE_TIMESTAMP('%F %H:%M', latestObsDt, 'America/Denver') as      latest_obs_dttm
-    ,SAFE_CAST(lng AS FLOAT64) as                                       longitude
-    ,SAFE_CAST(lat AS FLOAT64) as                                       latitude
+    SAFE_CAST(NULLIF(numSpeciesAllTime, "nan") AS INT64) as                            species_all_time
+    ,PARSE_TIMESTAMP('%F %H:%M', NULLIF(latestObsDt, "nan"), 'America/Denver') as      latest_obs_dttm
+    ,SAFE_CAST(NULLIF(lng, "nan") AS FLOAT64) as                                       longitude
+    ,SAFE_CAST(NULLIF(lat, "nan") AS FLOAT64) as                                       latitude
     ,subnational2Code as                                                sub_national_2_code
     ,subnational1Code as                                                sub_national_1_code
     ,locName as                                                         hotspot_name
