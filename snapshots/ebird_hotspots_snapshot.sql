@@ -3,7 +3,7 @@
         config(
           unique_key='primary_key',
           strategy='timestamp',
-          updated_at='extracted_at',
+          updated_at='latest_obs_dttm',
           target_schema='dev_staging'
         )
     }}
