@@ -21,10 +21,24 @@ SELECT
 FROM
 base_ebird_hotspots 
 )
-
+,
+stg_ebird_hotspots_key AS (
 SELECT
 stg_ebird_hotspots_raw.*,
 FARM_FINGERPRINT(CONCAT(species_all_time, ebird_loc_id, latest_obs_dttm,
-                    longitude, latitude, sub_national_2_code)) as        primary_key
+                    longitude, latitude, sub_national_2_code)) as                      primary_key
 FROM
 stg_ebird_hotspots_raw
+)
+
+SELECT 
+    * 
+FROM 
+    (SELECT 
+        *,
+        RANK() OVER ( PARTITION BY primary_key ORDER BY extracted_at desc) as          rank_
+    FROM 
+    stg_ebird_hotspots_key)
+WHERE 
+rank_ = 1
+AND primary_key IS NOT NULL
