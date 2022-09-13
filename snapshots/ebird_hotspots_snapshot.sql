@@ -8,6 +8,6 @@
         )
     }}
     -- Pro-Tip: Use sources in snapshots!
-    SELECT * EXCEPT(extracted_at, rank_) FROM {{ ref('stg_ebird_hotspots') }}
+    SELECT * FROM {{ ref('stg_ebird_hotspots') }}
 
 {% endsnapshot %}
