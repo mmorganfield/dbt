@@ -35,7 +35,7 @@ SELECT
     * 
 FROM 
     (SELECT 
-        *,
+        * EXCEPT(extracted_at),
         RANK() OVER ( PARTITION BY primary_key ORDER BY extracted_at desc) as          rank_
     FROM 
     stg_ebird_hotspots_key)
