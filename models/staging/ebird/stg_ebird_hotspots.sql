@@ -24,7 +24,6 @@ base_ebird_hotspots
 
 SELECT
 stg_ebird_hotspots_raw.*,
-FARM_FINGERPRINT(CONCAT(species_all_time, ebird_loc_id, latest_obs_dttm,
-                    longitude, latitude, sub_national_2_code)) as        primary_key
+FARM_FINGERPRINT(CONCAT(ebird_loc_id, longitude, latitude, sub_national_2_code)) as        primary_key
 FROM
 stg_ebird_hotspots_raw
