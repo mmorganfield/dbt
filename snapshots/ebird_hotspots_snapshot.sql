@@ -8,6 +8,6 @@
         )
     }}
     -- Pro-Tip: Use sources in snapshots!
-    select * from {{ ref('dev_staging', 'stg_ebird_hotspots') }}
+    select * from {{ ref('stg_ebird_hotspots') }}
 
 {% endsnapshot %}
