@@ -22,14 +22,10 @@ sources:
        
         - name: base_ebird
           description: "An external table of eBird observations data"
-          
           external:
-            
             location: "gs://max-warehouse-results/ebird/ebird*.json"
-            
             options:
                 format: json
-            
             columns:
               - name: obsReviewed
                 data_type: string
