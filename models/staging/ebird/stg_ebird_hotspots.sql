@@ -42,3 +42,15 @@ FROM
 WHERE 
 rank_ = 1
 AND primary_key IS NOT NULL
+GROUP BY 
+    species_all_time,
+    primary_key,
+    extracted_at,
+    ebird_loc_id,
+    national_code,
+    hotspot_name,
+    sub_national_1_code,
+    sub_national_2_code,
+    latitude,
+    longitude,
+    latest_obs_dttm
