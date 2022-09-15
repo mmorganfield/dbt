@@ -1,9 +1,9 @@
 {% snapshot ebird_hotspots_snapshot_check %}
     {{
         config(
-          unique_key='ebird_loc_id',
+          unique_key='primary_key',
           strategy='check',
-          updated_at='latest_obs_dttm',
+          updated_at='extracted_at',
           check_cols=['latest_obs_dttm',
                         'species_all_time',
                         'hotspot_name',
@@ -24,7 +24,9 @@
         hotspot_name,
         sub_national_2_code,
         sub_national_1_code,
-        national_code
+        national_code,
+        primary_key,
+        extracted_at
     FROM {{ ref('stg_ebird_hotspots') }}
 
 {% endsnapshot %}
