@@ -36,6 +36,12 @@ models:
                     +re_data_metrics:
                         table:
                             - row_count
+                stg_ebird_hotspots:
+                    +enabled: true
+                    +materialized: incremental
+                    +re_data_metrics:   
+                        table:
+                            - row_count
             covid:
                 stg_county_cases:
                     +enabled: true

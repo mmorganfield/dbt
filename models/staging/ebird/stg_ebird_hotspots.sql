@@ -32,7 +32,7 @@ stg_ebird_hotspots_raw
 )
 
 SELECT 
-    * EXCEPT (rank_, extracted_at)
+    * EXCEPT(rank_)
 FROM 
     (SELECT 
         *,
