@@ -1,6 +1,6 @@
 WITH base_county_cases AS (
     
-    SELECT * FROM {{ ref('base_county_cases')}}
+    SELECT * FROM {{ source('covid_cases', 'us_counties')}}
 
 ), stg_county_cases AS (
     SELECT
