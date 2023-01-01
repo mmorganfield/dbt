@@ -22,7 +22,7 @@ WITH base_county_cases AS (
                 ORDER BY 
                     date ASC)                      as new_deaths
     FROM 
-        stg_county_cases
+        base_county_cases
 )
 
 SELECT 
