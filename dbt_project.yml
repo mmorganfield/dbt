@@ -24,6 +24,9 @@ clean-targets:         # directories to be removed by `dbt clean`
 
 models:
     warehouse: 
+        +persist_docs:
+            relation: true
+            columns: true
         staging:
             +schema: dev_staging
             +materialized: table
@@ -52,9 +55,7 @@ models:
             ebird:
                 int_ebird_obs:
                     +enabled: true
-            covid: 
-                int_county_cases:
-                    +enabled: true
+
         prod_dw:
             +schema: prod_dw
             +materialized: table
