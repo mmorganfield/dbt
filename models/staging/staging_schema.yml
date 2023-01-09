@@ -1,0 +1,111 @@
+version: 2
+
+models:
+    - name: stg_ebird_hotspots
+
+      columns: 
+        - name: species_all_time
+          description: Total species spotted at hotspot
+        - name: latest_obs_dttm
+          description: The most recent date of a species observation
+        - name: longitude
+          description: Longitude of hotspot
+        - name: latitude
+          description: Latitude of hotspot
+        - name: sub_national_2_code
+          description: The Country-State-County code
+        - name: sub_national_1_code
+          description: The Country-State code
+        - name: hotspot_name
+          description: The name of the hotspot
+          tests:  
+            - not_null
+        - name: national_code
+          description: The Country code
+        - name: ebird_loc_id
+          description: The unique id given by eBird
+          tests:  
+            - not_null
+        - name: extracted_at
+          description: When the record was extracted
+        - name: primary_key
+          description: The unique key of the table grain - location and time >
+                      of extraction
+          tests:
+            - unique
+            - not_null
+    
+    - name: stg_ebird_obs
+
+      columns:
+        - name: obs_reviewed
+          description: Has the observation been reviewed? (For rare sightings)
+        - name: sub_id
+          description: The ID of the checklist
+          tests:
+            - not_null 
+        - name: obs_valid
+          description: Is the observation valid?
+        - name: longitude
+          ddscription: The Longitude of the checklist
+        - name: latitude
+          description: The Latitude of the checklist
+        - name: species_code
+          description: The code of the species observed 
+        - name: obs_dttm
+          description: The obesrvation datetime
+        - name: loc_id
+          description: The eBird location ID of sighting
+        - name: sci_name
+          description: The scientific name of the species observed
+        - name: how_many
+          description: The number of birds observed per species
+        - name: loc_name 
+          description: The eBird location name of sighting
+        - name: loc_private
+          description: Is the location private?
+        - name: common_name
+          description: The common name of the species observed 
+        - name: file_name
+          description: The GCS file name
+        - name: extracted_at
+          description: When the record was extracted 
+        - name: primary_key
+          description: The primary key of location, datetime, checklist and >
+                        species observed
+          tests:
+            - unique 
+            - not_null
+
+    - name: stg_county_cases
+
+      columns:
+        - name: date_key
+          description: Foreign key of date 
+          tests:  
+            - not_null 
+        - name: case_date
+          description: The date of reported cases
+          tests: 
+            - not_null 
+        - name: case_county
+          description: The US county of the cases
+          tests: 
+            - not_null 
+        - name: case_state_name
+          description: The US state name of the cases
+        - name: case_county_fips_code
+          description: The US county FIPS code of the cases 
+        - name: running_total_cases
+          description: The running total of cases for this date and location
+        - name: new_cases
+          description: New cases reported for this date and location 
+        - name: running_total_deaths
+          description: The running total of deaths for this date and location
+        - name: new_deaths
+          description: New deaths reported for this date and location
+        - name: unique_key
+          description: The primary key of location and date of cases
+          tests:  
+            - not_null 
+            - unique
