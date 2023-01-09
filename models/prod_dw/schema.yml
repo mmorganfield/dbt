@@ -1,0 +1,156 @@
+version: 2
+
+models: 
+  - name: county_cases
+
+    columns:
+      - name: date_key
+        description: Foreign key of date 
+        tests:  
+          - not_null 
+      - name: case_date
+        description: The date of reported cases
+        tests: 
+          - not_null 
+      - name: case_county
+        description: The US county of the cases
+        tests: 
+          - not_null 
+      - name: case_state_name
+        description: The US state name of the cases
+      - name: case_county_fips_code
+        description: The US county FIPS code of the cases 
+      - name: running_total_cases
+        description: The running total of cases for this date and location
+      - name: new_cases
+        description: New cases reported for this date and location 
+      - name: running_total_deaths
+        description: The running total of deaths for this date and location
+      - name: new_deaths
+        description: New deaths reported for this date and location
+      - name: unique_key
+        description: The primary key of location and date of cases
+        tests:  
+          - not_null 
+          - unique
+
+  - name: dim_ebird_hotspots
+
+    columns: 
+      - name: species_all_time
+        description: Total species spotted at hotspot
+      - name: latest_obs_dttm
+        description: The most recent date of a species observation
+      - name: longitude
+        description: Longitude of hotspot
+      - name: latitude
+        description: Latitude of hotspot
+      - name: sub_national_2_code
+        description: The Country-State-County code
+      - name: sub_national_1_code
+        description: The Country-State code
+      - name: hotspot_name
+        description: The name of the hotspot
+        tests:  
+          - not_null
+      - name: national_code
+        description: The Country code
+      - name: ebird_loc_id
+        description: The unique id given by eBird
+        tests:  
+          - not_null
+      - name: extracted_at
+        description: When the record was extracted
+      - name: primary_key
+        description: >
+                    The unique key of the table grain - location and time 
+                    of extraction
+        tests:
+          - unique
+          - not_null
+
+
+  - name: ebird_obs
+
+    columns:
+      - name: obs_reviewed
+        description: Has the observation been reviewed? (For rare sightings)
+      - name: date_key 
+        description: Foreign key of observation date 
+      - name: sub_id
+        description: The ID of the checklist
+        tests:
+          - not_null 
+      - name: obs_valid
+        description: Is the observation valid?
+      - name: longitude
+        description: The Longitude of the checklist
+      - name: latitude
+        description: The Latitude of the checklist
+      - name: species_code
+        description: The code of the species observed 
+      - name: obs_dttm
+        description: The obesrvation datetime
+      - name: obs_date 
+        description: The observation date
+      - name: loc_id
+        description: The eBird location ID of sighting
+      - name: sci_name
+        description: The scientific name of the species observed
+      - name: how_many
+        description: The number of birds observed per species
+      - name: loc_name 
+        description: The eBird location name of sighting
+      - name: loc_private
+        description: Is the location private?
+      - name: common_name
+        description: The common name of the species observed 
+      - name: file_name
+        description: The GCS file name
+      - name: etl_create_dt
+        description: When the record was extracted 
+      - name: primary_key
+        description: >
+                      The primary key of location, datetime, checklist and
+                      species observed
+        tests:
+          - unique 
+          - not_null
+
+  - name: google_calendar_dim
+
+    columns:
+      - name: location
+        description: "The virtual or physical location of an event" 
+      - name: description
+        description: "Any notes provided for the event"
+      - name: event_timezone
+        description: "The timezone in which an event was established. Default is MT"
+      - name: end_time
+        description: "The time an event ended, in the timezone of event_timezone"
+      - name: end_date
+        description: "The date the event ended"
+      - name: start_time
+        description: "The time an event started, in the timezone of event_timezone"
+      - name: start_date
+        description: "The date the event started"
+      - name: event_attendees_name
+        description: "If included in Google Contacts, name included"
+      - name: event_attendees_email
+        description: "The email of attendee"
+      - name: event_attendees_response_status
+        description: "The response of the attendee to the particular event invite"
+      - name: event_summary
+        description: "The summary or title of the event"
+      - name: event_updated_time
+        description: "The most recent updated time of an event"
+      - name: event_created_time
+        description: "The time at which the event was created"
+      - name: is_organizer_self_ind
+        description: "Indicates if the event was created by maxwell.morganfield@gmail.com"
+      - name: organizer_email
+        description: "The email of the person that created the event"
+      - name: _record_create_dt
+        description: "The timestamp of when a record was created"
+      - name: primary_key
+        description: "A surrogate key created from concatenated values for a single event"
