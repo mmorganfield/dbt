@@ -1,0 +1,18 @@
+config:
+  send_anonymous_usage_stats: true
+  use_colors: true
+  write_json: true
+
+
+default:
+  target: dev
+  outputs: 
+    dev: 
+      type: bigquery
+      method: oauth
+      project: max-warehouse-323301
+      dataset: maxmorganfield
+      threads: 2
+    target: dev
+
+
