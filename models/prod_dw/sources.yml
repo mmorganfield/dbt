@@ -1,9 +1,0 @@
-version: 2
-
-sources:
-    - name: dev_intermediate
-      database: max-warehouse-323301
-      tables:
-        - name: int_google_calendar_dim
-        - name: int_ebird
-        - name: int_county_cases
