@@ -10,11 +10,13 @@
                         'longitude',
                         'latitude',
                         'sub_national_2_code',
-                        'sub_national_1_code'],
+                        'sub_national_1_code',
+                        'ebird_loc_id'],
           target_schema='dev_staging'
         )
     }}
     -- Pro-Tip: Use sources in snapshots!
+    
     SELECT 
         ebird_loc_id,
         species_all_time,
@@ -28,5 +30,8 @@
         primary_key,
         extracted_at
     FROM {{ ref('stg_ebird_hotspots') }}
+    qualify
+        row_number() over (partition by primary_key order by extracted_at desc)
+        = 1
 
 {% endsnapshot %}
